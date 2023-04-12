@@ -8,9 +8,9 @@ let tasks = Array();
 class Task {
     constructor(name) {
         this.name = name;
-        this.status = "stopped";
         this.taskContainer = this.createElement();
         this.intervalId = undefined;
+        this.seconds = 0;
     }
 
     createElement() {
@@ -49,15 +49,38 @@ class Task {
     }
 
     startTimer() {
-        console.log("Starting timer of: " + this.name);
+        if (this.intervalId !== undefined) {
+            // A timer is already running for this task
+            return;
+        }
+
+        this.intervalId = setInterval(() => {
+            this.seconds += 1000;
+            const taskTimerElement = this.taskContainer.querySelector(".task-timer");
+            const timerText = new Date(this.seconds).toISOString().slice(11,19);
+            taskTimerElement.textContent = timerText;
+        }, 1000);
+
+        this.taskContainer.classList.add("active-task");
     }
 
     stopTimer() {
-        console.log("Stopping timer of: " + this.name);
+        if (this.intervalId === undefined) {
+            // no timer is running for this task
+            return;
+        }
+
+        clearInterval(this.intervalId);
+        this.intervalId = undefined;
+
+        this.taskContainer.classList.remove("active-task");
     }
 
     resetTimer() {
-        console.log("Resetting timer of: " + this.name);
+        const taskTimerElement = this.taskContainer.querySelector(".task-timer");
+        taskTimerElement.textContent = "00:00:00";
+        this.seconds = 0;
+        this.stopTimer();
     }
 }
 
@@ -81,54 +104,6 @@ function addTask() {
 
     // Clear task name input
     taskNameInput.value = "";
-}
-
-// Function to start the timer for a task
-function startTimer(event) {
-    const taskElement = event.target.closest(".task");
-    if (taskElement === null || taskElement.intervalId !== undefined) {
-        // Element does not exist OR
-        // A timer is already running for this task
-        return;
-    }
-
-    taskElement.intervalId = setInterval(() => {
-        const taskTimerElement = taskElement.querySelector(".task-timer");
-        const [hours, minutes, seconds] = taskTimerElement.textContent.split(":").map(parseFloat);
-        const newSeconds = seconds + 1;
-        const newMinutes = minutes + Math.floor(newSeconds / 60);
-        const newHours = hours + Math.floor(newMinutes / 60);
-        const timerText = `${newHours.toString().padStart(2, "0")}:${newMinutes.toString().padStart(2, "0")}:${(newSeconds % 60).toString().padStart(2, "0")}`;
-        taskTimerElement.textContent = timerText;
-    }, 1000);
-
-    taskElement.classList.add("active-task");
-}
-
-// Function to stop the timer for a task
-function stopTimer(event) {
-    const taskElement = event.target.closest(".task");
-    if (taskElement === null || taskElement.intervalId === undefined) {
-        // Element does not exist OR
-        // no timer is running for this task
-        return;
-    }
-
-    clearInterval(taskElement.intervalId);
-    taskElement.intervalId = undefined;
-
-    taskElement.classList.remove("active-task");
-}
-
-// Function to reset the timer for a task
-function resetTimer(event) {
-    const taskElement = event.target.closest(".task");
-    if (taskElement === null) return;
-
-    const taskTimerElement = taskElement.querySelector(".task-timer");
-    taskTimerElement.textContent = "00:00:00";
-
-    stopTimer(event);
 }
 
 // Event listeners
