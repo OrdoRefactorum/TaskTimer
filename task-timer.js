@@ -82,6 +82,10 @@ class Task {
         this.seconds = 0;
         this.stopTimer();
     }
+
+    toString(){
+        return `${this.name} has been running for: ${new Date(this.seconds).toISOString().slice(11,19)}`
+    }
 }
 
 // Function to create a new task element
