@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin-right: 10px;
+        }
+
+        #wrapper{
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        #task-list div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .task-name {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .task-timer {
+            font-size: 1.2em;
+        }
+
+        .task-actions button {
+            margin-left: 10px;
+        }
+
+        .active-task {
+            background-color: #c2e0ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1>Task Timer</h1>
+        <label for="task-name">Task name:</label>
+        <input type="text" id="task-name">
+        <button id="add-task-btn">Add Task</button>
+        <div id="task-list"></div>
+        <script src="task-timer.js"></script>
+    </div>
+</body>
+
+</html>
