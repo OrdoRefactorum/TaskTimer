@@ -111,14 +111,24 @@ function addTask() {
     const taskName = taskNameInput.value;
     if (taskName === "") return;
 
+    if (taskName.includes(";")) {
+        taskName.split(";").forEach(name => {
+            createTask(name.trim());
+        })
+    } else {
+        createTask(taskName.trim());
+    }
+
+    // Clear task name input
+    taskNameInput.value = "";
+}
+
+function createTask(taskName) {
     // Create new task element
     const taskElement = createTaskElement(taskName);
 
     // Add task element to task list
     taskList.appendChild(taskElement);
-
-    // Clear task name input
-    taskNameInput.value = "";
 }
 
 // Event listeners
