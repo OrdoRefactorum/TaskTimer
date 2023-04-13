@@ -8,8 +8,6 @@ Nothing fancy, it should just work in a first iteration and I'd be building upon
 
 Following you will find my escapades with ChatGPT in producing the basic code, as well as the improvements I made upon that product.
 
-[[TOC]]
-
 ## 1. First Iteration (after 2 attempts)
 
 Actually this is the third iteration as ChatGPT first gave me an incomplete JavaScript Code and then after asking for the rest gave me complete other code that did not match the HTML.
