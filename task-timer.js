@@ -22,6 +22,7 @@ class Task {
         const startBtn = document.createElement("button");
         const stopBtn = document.createElement("button");
         const resetBtn = document.createElement("button");
+        const deleteBtn = document.createElement("button");
 
         // Set element attributes
         taskContainer.classList.add("task");
@@ -36,6 +37,8 @@ class Task {
         stopBtn.addEventListener("click", this.stopTimer.bind(this));
         resetBtn.textContent = "Reset";
         resetBtn.addEventListener("click", this.resetTimer.bind(this));
+        deleteBtn.textContent = "Delete";
+        deleteBtn.addEventListener("click", this.deleteTask.bind(this));
 
         // Append elements to task container
         taskContainer.appendChild(taskNameSpan);
@@ -43,6 +46,7 @@ class Task {
         taskActionsSpan.appendChild(startBtn);
         taskActionsSpan.appendChild(stopBtn);
         taskActionsSpan.appendChild(resetBtn);
+        taskActionsSpan.appendChild(deleteBtn);
         taskContainer.appendChild(taskActionsSpan);
 
         this.taskContainer = taskContainer;
@@ -80,6 +84,11 @@ class Task {
         this.timerElement.textContent = "00:00:00";
         this.seconds = 0;
         this.stopTimer();
+    }
+
+    deleteTask(){
+        this.stopTimer();
+        taskList.removeChild(this.taskContainer);
     }
 
     toString(){
