@@ -3,7 +3,8 @@ const taskNameInput = document.getElementById("task-name");
 const addTaskBtn = document.getElementById("add-task-btn");
 const taskList = document.getElementById("task-list");
 
-let tasks = Array();
+// Array which holds all the tasks
+const tasks = Array();
 
 class Task {
     constructor(name) {
@@ -61,7 +62,7 @@ class Task {
 
         this.intervalId = setInterval(() => {
             this.seconds += 1000;
-            const timerText = new Date(this.seconds).toISOString().slice(11,19);
+            const timerText = new Date(this.seconds).toISOString().slice(11, 19);
             this.timerElement.textContent = timerText;
         }, 1000);
 
@@ -86,13 +87,15 @@ class Task {
         this.stopTimer();
     }
 
-    deleteTask(){
+    deleteTask() {
         this.stopTimer();
+        const indexToRemove = tasks.findIndex((task => task.name == this.name));
+        tasks.splice(indexToRemove, 1);
         taskList.removeChild(this.taskContainer);
     }
 
-    toString(){
-        return `${this.name} has been running for: ${new Date(this.seconds).toISOString().slice(11,19)}`
+    toString() {
+        return `${this.name} has been running for: ${new Date(this.seconds).toISOString().slice(11, 19)}`
     }
 }
 
