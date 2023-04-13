@@ -8,9 +8,9 @@ let tasks = Array();
 class Task {
     constructor(name) {
         this.name = name;
-        this.taskContainer = this.createElement();
         this.intervalId = undefined;
         this.seconds = 0;
+        this.createElement();
     }
 
     createElement() {
@@ -45,7 +45,8 @@ class Task {
         taskActionsSpan.appendChild(resetBtn);
         taskContainer.appendChild(taskActionsSpan);
 
-        return taskContainer;
+        this.taskContainer = taskContainer;
+        this.timerElement = taskTimerSpan;
     }
 
     startTimer() {
@@ -56,9 +57,8 @@ class Task {
 
         this.intervalId = setInterval(() => {
             this.seconds += 1000;
-            const taskTimerElement = this.taskContainer.querySelector(".task-timer");
             const timerText = new Date(this.seconds).toISOString().slice(11,19);
-            taskTimerElement.textContent = timerText;
+            this.timerElement.textContent = timerText;
         }, 1000);
 
         this.taskContainer.classList.add("active-task");
@@ -77,8 +77,7 @@ class Task {
     }
 
     resetTimer() {
-        const taskTimerElement = this.taskContainer.querySelector(".task-timer");
-        taskTimerElement.textContent = "00:00:00";
+        this.timerElement.textContent = "00:00:00";
         this.seconds = 0;
         this.stopTimer();
     }
