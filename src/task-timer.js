@@ -33,8 +33,10 @@ class Task {
         taskTimerSpan.textContent = "00:00:00";
         taskActionsSpan.classList.add("task-actions");
         startBtn.textContent = "Start";
+        startBtn.classList.add("start");
         startBtn.addEventListener("click", this.startTimer.bind(this));
         stopBtn.textContent = "Stop";
+        stopBtn.classList.add("stop");
         stopBtn.addEventListener("click", this.stopTimer.bind(this));
         resetBtn.textContent = "Reset";
         resetBtn.addEventListener("click", this.resetTimer.bind(this));
@@ -66,11 +68,13 @@ class Task {
             this.timerElement.textContent = timerText;
         }, 1000);
 
+        this.taskContainer.getElementsByClassName("start")[0].disabled = true;
+        this.taskContainer.getElementsByClassName("stop")[0].disabled = false;
         this.taskContainer.classList.add("active-task");
     }
 
     stopTimer() {
-        if (this.intervalId === undefined) {
+        if (this.intervalId === undefined) { 
             // no timer is running for this task
             return;
         }
@@ -78,6 +82,8 @@ class Task {
         clearInterval(this.intervalId);
         this.intervalId = undefined;
 
+        this.taskContainer.getElementsByClassName("start")[0].disabled = false;
+        this.taskContainer.getElementsByClassName("stop")[0].disabled = true;
         this.taskContainer.classList.remove("active-task");
     }
 
@@ -109,7 +115,8 @@ function createTaskElement(taskName) {
 // Function to add a new task to the list
 function addTask() {
     const taskName = taskNameInput.value;
-    if (taskName === "") return;
+    if (taskName === "")
+        return;
 
     if (taskName.includes(";")) {
         taskName.split(";").forEach(name => {
