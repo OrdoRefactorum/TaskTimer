@@ -1,8 +1,9 @@
 {
   "dependencies": {
-    "fs": "0.0.1-security",
     "@node-minify/core": "8.0.6",
+    "@node-minify/csso": "8.0.6",
+    "@node-minify/terser": "8.0.6",
     "cheerio": "1.0.0-rc.12",
-    "@node-minify/terser":"8.0.6"
+    "fs": "0.0.1-security"
   }
 }

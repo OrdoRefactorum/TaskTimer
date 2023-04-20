@@ -2,6 +2,7 @@ const fs = require('fs');
 const cheerio = require('cheerio');
 const minify = require('@node-minify/core');
 const terser = require('@node-minify/terser');
+const csso = require('@node-minify/csso');
 
 async function main() {
   // Minify Javascript
@@ -16,15 +17,26 @@ async function main() {
   // Load the HTML into a cheerio instance
   const $ = cheerio.load(html);
 
-  // Find the existing script tag and replace its contents with the external JavaScript file
+  // find style
+  const css = $('style');
+
+  // minify loaded CSS in-memory
+  var minifiedCss = await minify({
+    compressor: csso,
+    content: `${css}`
+  });
+
+  // Find the existing script tag and replace its contents with the minified JavaScript
   $('script').replaceWith(`<script>${minifiedJs}</script>`);
+
+  // Find the existing style tag and replace its contents with the minified CSS
+  $('style').replaceWith(`<style>${minifiedCss}</style>`)
 
   // Generate the modified HTML document
   const newHtml = $.html();
 
   // Write the modified HTML to a file
   fs.writeFileSync('new-index.html', newHtml);
-
 };
 
 main();
