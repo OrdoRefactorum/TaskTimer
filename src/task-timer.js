@@ -95,7 +95,7 @@ class Task {
     }
 
     toString() {
-        return `${this.name} has been running for: ${new Date(this.seconds).toISOString().slice(11, 19)}`
+        return `${this.name} has been running for: ${new Date(this.seconds).toISOString().slice(11, 19)}`;
     }
 }
 
@@ -114,7 +114,7 @@ function addTask() {
     if (taskName.includes(";")) {
         taskName.split(";").forEach(name => {
             createTask(name.trim());
-        })
+        });
     } else {
         createTask(taskName.trim());
     }
