@@ -5,10 +5,9 @@ const terser = require('@node-minify/terser');
 
 async function main() {
   // Minify Javascript
-  await minify({
+  var minifiedJs = await minify({
     compressor: terser,
-    input: '../src/task-timer.js',
-    output: 'minifiedJs.js',
+    content: `${fs.readFileSync('../src/task-timer.js')}`
   });
 
   // Read the contents of the HTML file
@@ -18,13 +17,14 @@ async function main() {
   const $ = cheerio.load(html);
 
   // Find the existing script tag and replace its contents with the external JavaScript file
-  $('script').replaceWith(`<script>${fs.readFileSync('minifiedJs.js')}</script>`);
+  $('script').replaceWith(`<script>${minifiedJs}</script>`);
 
   // Generate the modified HTML document
   const newHtml = $.html();
 
   // Write the modified HTML to a file
   fs.writeFileSync('new-index.html', newHtml);
+
 };
 
 main();

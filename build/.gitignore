@@ -2,6 +2,4 @@
 node_modules/
 
 # ignore generated files
-minifiedJs.js
-output.js
 new-index.html
